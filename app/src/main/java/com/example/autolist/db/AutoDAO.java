@@ -12,21 +12,25 @@ import java.util.List;
 @Dao
 public interface AutoDAO {
 
-    @Query("SELECT * FROM AutoRecord ORDER BY name ASC")
-    LiveData<List<AutoRecord>> getAllPlaceRecords();
+    @Query("SELECT * FROM AutoRecord ORDER BY dateEntered ASC")
+    LiveData<List<AutoRecord>> getAllAutoRedcords();
 
     @Insert(onConflict = OnConflictStrategy.IGNORE) // Ignore new record for an existing place
-    void insert(AutoRecord... pr);
+    void insert(AutoRecord... ar);
 
     @Delete
-    void delete(AutoRecord... pr);
+    void delete(AutoRecord... ar);
 
-    @Query("SELECT * FROM AutoRecord WHERE name = :name LIMIT 1")
-    LiveData<AutoRecord> getRecordForName(String name);
+    @Query("SELECT * FROM AutoRecord WHERE autoId = :autoId LIMIT 1")
+    LiveData<AutoRecord> getRecordForAuto(String autoId);
+
+//    @Query("SELECT * FROM AutoRecord WHERE year like '%' ) // TODO finish query
+//    LiveData<AutoRecord> getRecordForAuto(String autoId);
 
     @Query("DELETE FROM AutoRecord WHERE id = :id")
     void delete(int id);
 
-//    @Query("SELECT * FROM PlaceRecord")
-//    LiveData<List<PlaceRecord>> getAllRecords();
+//    @Query("SELECT * from NOTE where text like '%' || :search || '%' or hashTags like '%' || :search || '%' ")
+//    LiveData<List<AutoRecord>> searchNotes(String search);
+
 }

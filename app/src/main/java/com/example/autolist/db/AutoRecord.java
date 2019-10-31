@@ -26,4 +26,74 @@ public class AutoRecord {
         this.imageFilePath = imageFilePath;
         this.dateEntered = dateEntered;
     }
+
+    public int getAutoId() {
+        return autoId;
+    }
+
+    public void setAutoId(int autoId) {
+        this.autoId = autoId;
+    }
+
+    @NonNull
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(@NonNull String year) {
+        this.year = year;
+    }
+
+    public String getMake() {
+        return make;
+    }
+
+    public void setMake(String make) {
+        this.make = make;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getImageFilePath() {
+        return imageFilePath;
+    }
+
+    public void setImageFilePath(String imageFilePath) {
+        this.imageFilePath = imageFilePath;
+    }
+
+    public Date getDateEntered() {
+        return dateEntered;
+    }
+
+    public void setDateEntered(Date dateEntered) {
+        this.dateEntered = dateEntered;
+    }
+
+    @Override
+    public String toString() {
+        return "AutoRecord{" +
+                "autoId=" + autoId +
+                ", year='" + year + '\'' +
+                ", make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", note='" + note + '\'' +
+                ", imageFilePath='" + imageFilePath + '\'' +
+                ", dateEntered=" + dateEntered +
+                '}';
+    }
 }
