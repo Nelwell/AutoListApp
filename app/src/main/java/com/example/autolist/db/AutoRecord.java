@@ -1,10 +1,12 @@
 package com.example.autolist.db;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
+@Entity
 public class AutoRecord {
 
     @PrimaryKey(autoGenerate = true)
@@ -25,6 +27,10 @@ public class AutoRecord {
         this.note = note;
         this.imageFilePath = imageFilePath;
         this.dateEntered = dateEntered;
+    }
+
+    public String getTitle() {
+        return String.format("%s %s %s", year, make, model);
     }
 
     public int getAutoId() {

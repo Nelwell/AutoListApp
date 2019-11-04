@@ -11,7 +11,7 @@ import androidx.room.TypeConverters;
 // Implemented as a thread-safe Singleton
 @Database(entities = {AutoRecord.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
-public class AutoDatabase extends RoomDatabase {
+public abstract class AutoDatabase extends RoomDatabase {
 
     private static volatile AutoDatabase INSTANCE;
 
