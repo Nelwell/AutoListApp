@@ -8,18 +8,21 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 /** Where app will access needed data */
-// Define methods app will call to query database
+// Define methods app will call to query database, provide clean API for rest of app.
+// Can receive data from multiple resources
 public class AutoRepository {
 
     private AutoDAO mAutoDAO;
+//    private LiveData<List<AutoRecord>> mAllAutoRecords;
 
     public AutoRepository(Application application) {
         AutoDatabase db = AutoDatabase.getDatabase(application);
         mAutoDAO = db.autoDAO();
+//        mAllAutoRecords = mAutoDAO.getAllAutoRecords();
     }
 
-    // LiveData can wrap one item or a list of items inside it,
-    // let's you know if something in db changes
+    // LiveData can wrap one item or a list of items inside it.
+    // Let's you know if something in db changes
     public LiveData<List<AutoRecord>> getAllAutoRecords() {
         return mAutoDAO.getAllAutoRecords();
     }
@@ -30,14 +33,18 @@ public class AutoRepository {
 
     public void insert(AutoRecord autoRecord) {
         // Insert record asynchronously in the background so other processes can continue seamlessly
-        new InsertAutoAsync(mAutoDAO).execute(autoRecord); // when called, calls doInBackground
+        new InsertAutoAsyncTask(mAutoDAO).execute(autoRecord); // when called, calls doInBackground
         // method automatically and passes 'autoRecord' arg
     }
 
     public void delete(AutoRecord autoRecord) {
         // Update record asynchronously in the background
-        new DeleteAutoAsync(mAutoDAO).execute(autoRecord); // when called, calls doInBackground
+        new DeleteAutoAsyncTask(mAutoDAO).execute(autoRecord); // when called, calls doInBackground
         // method automatically and passes 'autoRecord' arg
+    }
+
+    public void deleteAllAutoRecords() {
+        new DeleteAllAutosAsyncTask(mAutoDAO).execute();
     }
 
 //    public void delete(int id) {
@@ -45,29 +52,29 @@ public class AutoRepository {
 
 
     // Database tasks must run the background, not on the UI thread
-    static class InsertAutoAsync extends AsyncTask<AutoRecord, Void, Void> {
+    private static class InsertAutoAsyncTask extends AsyncTask<AutoRecord, Void, Void> {
 
-        private AutoDAO dao;
+        private AutoDAO autoDAO;
 
         // Constructor
-        InsertAutoAsync(AutoDAO dao) {
-            this.dao = dao;
+        private InsertAutoAsyncTask(AutoDAO autoDAO) {
+            this.autoDAO = autoDAO;
         }
 
         @Override
         protected Void doInBackground(AutoRecord... autos) {
-            dao.insert(autos[0]);
+            autoDAO.insert(autos[0]);
             return null;
         }
     }
 
     // Database tasks must run in the background, not on the UI thread
-    static class DeleteAutoAsync extends AsyncTask<AutoRecord, Void, Void> {
+    private static class DeleteAutoAsyncTask extends AsyncTask<AutoRecord, Void, Void> {
 
         private AutoDAO dao;
 
         // Constructor
-        DeleteAutoAsync(AutoDAO dao) {
+        private DeleteAutoAsyncTask(AutoDAO dao) {
             this.dao = dao;
         }
 
@@ -78,17 +85,34 @@ public class AutoRepository {
         }
     }
 
+    // Database tasks must run in the background, not on the UI thread
+    private static class DeleteAllAutosAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        private AutoDAO dao;
+
+        // Constructor
+        private DeleteAllAutosAsyncTask(AutoDAO dao) {
+            this.dao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            dao.deleteAllAutoRecords();
+            return null;
+        }
+    }
+
 //    private static class DeleteAutoIDAsyncTask extends AsyncTask<Integer, Void, Void> {
 //
-//        AutoDAO dao;
+//        AutoDAO autoDAO;
 //
-//        public DeleteAutoIDAsyncTask(AutoDAO dao) {
-//            this.dao = dao;
+//        public DeleteAutoIDAsyncTask(AutoDAO autoDAO) {
+//            this.autoDAO = autoDAO;
 //        }
 //
 //        @Override
 //        protected Void doInBackground(Integer... id) {
-//            dao.delete(id[0]);
+//            autoDAO.delete(id[0]);
 //            return null;
 //        }
 //    }

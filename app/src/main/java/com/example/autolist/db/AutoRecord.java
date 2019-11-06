@@ -11,6 +11,7 @@ public class AutoRecord {
 
     @PrimaryKey(autoGenerate = true)
     private int autoId;
+
     @NonNull
     private String year;
     private String make;

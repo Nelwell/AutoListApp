@@ -6,29 +6,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/auto_title"
-        android:layout_width="0dp"
+    <EditText
+        android:id="@+id/year_edittext"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/auto_title"
+        android:hint="@string/year_edittext"
+        android:inputType="number"
         android:textColor="@android:color/black"
         android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/make_edittext"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintTop_toBottomOf="@id/auto_image_button" />
 
-    <TextView
-        android:id="@+id/date_entered"
-        android:layout_width="0dp"
+    <EditText
+        android:id="@+id/make_edittext"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/date_entered"
-        app:layout_constraintBottom_toBottomOf="@+id/auto_title"
-        app:layout_constraintStart_toEndOf="@+id/auto_title" />
+        android:hint="@string/make_edittext"
+        android:inputType="textPersonName"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/year_edittext"
+        app:layout_constraintEnd_toStartOf="@+id/model_edittext"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/year_edittext" />
+
+    <EditText
+        android:id="@+id/model_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/model_edittext"
+        android:inputType="textNoSuggestions"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/make_edittext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/make_edittext" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/auto_image_button"
         android:layout_width="84dp"
         android:layout_height="87dp"
         android:layout_marginStart="8dp"
@@ -38,24 +59,24 @@
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <EditText
-        android:id="@+id/notes_editText"
-        android:layout_width="298dp"
+        android:id="@+id/notes_edittext"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:gravity="start|top"
+        android:hint="@string/notes_edittext"
         android:inputType="textMultiLine"
-        app:layout_constraintStart_toEndOf="@+id/imageButton"
+        app:layout_constraintStart_toEndOf="@+id/auto_image_button"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/finished_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Finished"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/finished_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

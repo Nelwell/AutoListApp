@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Auto List</string>
-    <string name="auto_title">auto_title</string>
-    <string name="date_entered">date_entered</string>
+    <string name="year_edittext">Year</string>
+    <string name="make_edittext">Make</string>
+    <string name="model_edittext">Model</string>
+    <string name="date_entered">Date created</string>
+    <string name="search_box">Search...</string>
+    <string name="finished_button">OK</string>
+    <string name="notes_edittext">Notes</string>
+    <string name="auto_info_textview">Vehicle Info</string>
 
 </resources>

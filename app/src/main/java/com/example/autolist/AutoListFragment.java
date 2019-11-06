@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.autolist.db.AutoRecord;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Date;
 import java.util.List;
@@ -29,10 +31,15 @@ public class AutoListFragment extends Fragment {
     private RecyclerView mAutoRecyclerView;
     private AutoAdapter mAutoAdapter;
     private AutoListViewModel mAutoListViewModel;
+    private EditText mSearchBox;
+    private FloatingActionButton mAddAutoButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_auto_list, container, false);
+
+        mSearchBox = view.findViewById(R.id.search_box);
+        mAddAutoButton = view.findViewById(R.id.new_auto_fab);
 
         // Gets reference to recycler view's attribute ID in activity_fragment layout file
         mAutoRecyclerView = view.findViewById(R.id.auto_recycler_view);
@@ -42,6 +49,18 @@ public class AutoListFragment extends Fragment {
         mAutoAdapter = new AutoAdapter();
         // Sets adapter in recycler view
         mAutoRecyclerView.setAdapter(mAutoAdapter);
+
+        // Creates AutoList view model connection
+//        mAutoListViewModel = ViewModelProviders.of(this).get(AutoListViewModel.class);
+
+        mAddAutoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                mAutoListViewModel.insert();
+                Intent intent = AutoActivity.newIntent(getActivity(), null);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
@@ -61,6 +80,8 @@ public class AutoListFragment extends Fragment {
                 Log.d(TAG, "autos are: " + autos);
                 // Set data in the adapter
                 mAutoAdapter.setAutos(autos);
+//                if (mAutoListViewModel.getAllAutoRecords().getValue().size() > 0)
+//                    mAutoRecyclerView.smoothScrollToPosition(mAutoListViewModel.getAllAutoRecords().getValue().size() - 1);
             }
         });
     }
@@ -78,9 +99,9 @@ public class AutoListFragment extends Fragment {
         AutoItemViewHolder(ConstraintLayout layout) {
             super(layout);
             // Get object references
-            mTitle = layout.findViewById(R.id.auto_title);
+            mTitle = layout.findViewById(R.id.auto_info_textview);
             mDateCreatedTextView = layout.findViewById(R.id.date_entered);
-            mNotesTextView = layout.findViewById(R.id.notes_text_view);
+            mNotesTextView = layout.findViewById(R.id.notes_textview);
             mThumbnail = layout.findViewById(R.id.imageView);
             // Set click listeners
             layout.setOnClickListener(this);
@@ -101,12 +122,12 @@ public class AutoListFragment extends Fragment {
             // If this is false, in this app, the click event is fired too.
         }
 
-        // Called each time a new AutoRecord needs displayed in AutoItemHolder
+        // Called each time a new AutoRecord needs displayed in AutoItemViewHolder
         public void bind(AutoRecord auto) {
             mAuto = auto;
             mTitle.setText(auto.getTitle());
-//            mDateCreatedTextView.setText("Created on " + auto.getDateCreated());
-//            mNotesTextView.setText(auto.getReason());
+            mDateCreatedTextView.setText("Created on "+auto.getDateEntered());
+            mNotesTextView.setText(auto.getNote());
         }
     }
 

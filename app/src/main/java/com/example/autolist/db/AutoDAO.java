@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface AutoDAO {
 
-    @Query("SELECT * FROM AutoRecord ORDER BY dateEntered ASC")
+    @Query("SELECT * FROM AutoRecord ORDER BY dateEntered DESC")
     LiveData<List<AutoRecord>> getAllAutoRecords();
 
     @Insert(onConflict = OnConflictStrategy.IGNORE) // Ignore new record for an existing place
@@ -20,6 +20,9 @@ public interface AutoDAO {
 
     @Delete
     void delete(AutoRecord... ar);
+
+    @Query("DELETE FROM AutoRecord")
+    void deleteAllAutoRecords();
 
     @Query("SELECT * FROM AutoRecord WHERE autoId = :autoId LIMIT 1")
     LiveData<AutoRecord> getRecordForAutoId(int autoId);

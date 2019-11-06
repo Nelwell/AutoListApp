@@ -17,15 +17,18 @@ public abstract class AutoDatabase extends RoomDatabase {
 
     public abstract AutoDAO autoDAO(); // Abstract method
 
-    static AutoDatabase getDatabase(final Context context) {
+    public static AutoDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (AutoDatabase.class) { // Only one thread can run this code at once
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AutoDatabase.class, "Automobile").build();
+                            AutoDatabase.class, "Auto_database")
+                            // Return instance of database
+                            .build();
                 }
             }
         }
+        // If not null...
         return INSTANCE;
     }
 
