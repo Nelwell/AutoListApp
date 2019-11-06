@@ -41,6 +41,10 @@ public class AutoListViewModel extends AndroidViewModel {
         autoRepository.delete(autoRecord);
     }
 
+    public void deleteAllAutoRecords() {
+        autoRepository.deleteAllAutoRecords();
+    }
+
 //    public void delete(int id) {
 //        autoRepository.delete(id);
 //    }

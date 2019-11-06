@@ -9,18 +9,21 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.autolist.db.AutoRecord;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,17 +53,27 @@ public class AutoListFragment extends Fragment {
         // Sets adapter in recycler view
         mAutoRecyclerView.setAdapter(mAutoAdapter);
 
-        // Creates AutoList view model connection
-//        mAutoListViewModel = ViewModelProviders.of(this).get(AutoListViewModel.class);
-
         mAddAutoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mAutoListViewModel.insert();
                 Intent intent = AutoActivity.newIntent(getActivity(), null);
                 startActivity(intent);
             }
         });
+
+        // Delete items from recyclerView by swiping
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                mAutoListViewModel.delete(mAutoAdapter.getAutoAt(viewHolder.getAdapterPosition()));
+//                Toast.makeText( this, "Vehicle deleted", Toast.LENGTH_SHORT).show();
+            }
+        }).attachToRecyclerView(mAutoRecyclerView);
 
         return view;
     }
@@ -71,7 +84,6 @@ public class AutoListFragment extends Fragment {
         super.onResume();
         // Creates AutoList view model connection
         mAutoListViewModel = ViewModelProviders.of(this).get(AutoListViewModel.class);
-
         // Gets all Auto Records from AutoList view model
         mAutoListViewModel.getAllAutoRecords().observe(this, new Observer<List<AutoRecord>>() {
             @Override
@@ -131,19 +143,18 @@ public class AutoListFragment extends Fragment {
         }
     }
 
+    // Class to create Adapter and perform adapter functions
     private class AutoAdapter extends RecyclerView.Adapter<AutoItemViewHolder> {
 
         // Adapter's internal data store
-        private List<AutoRecord> mAutos;
+        private List<AutoRecord> mAutos = new ArrayList<>();
 
         @Override
         public int getItemCount() {
-            if (mAutos == null) {
-                return 0;
-            } else {
-
+//            if (mAutos == null) {
+//                return 0;
+//            } else {
                 return mAutos.size();
-            }
         }
 
         @NonNull
@@ -152,9 +163,8 @@ public class AutoListFragment extends Fragment {
             // Get a reference to the Auto_list_element LinearLayout container and inflate in, in this context
             ConstraintLayout layout = (ConstraintLayout) LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_item_auto, parent, false);
-            // Create a new viewHolder, to contain this LinearLayout
-            AutoItemViewHolder viewHolder = new AutoItemViewHolder(layout);
-            return viewHolder;
+            // Create and return a new viewHolder, to contain this LinearLayout
+            return new AutoItemViewHolder(layout);
         }
 
         @Override
@@ -165,10 +175,15 @@ public class AutoListFragment extends Fragment {
             holder.bind(auto);
         }
 
+        // Puts list of autos into recyclerView
         public void setAutos(List<AutoRecord> autos) {
             this.mAutos = autos;
             // Tell recyclerView to reload
             notifyDataSetChanged();
+        }
+
+        public AutoRecord getAutoAt(int position) {
+            return mAutos.get(position);
         }
     }
 

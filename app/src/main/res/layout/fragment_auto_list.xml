@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00976262"
+    android:background="#48485C"
     tools:context=".AutoListActivity">
 
     <EditText
@@ -13,9 +13,12 @@
         android:layout_height="39dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="12dp"
+        android:backgroundTint="#C4C37B"
         android:ems="10"
         android:hint="@string/search_box"
         android:inputType="textPersonName"
+        android:textColor="#F1EDED"
+        android:textColorHint="#ADAAAA"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,27 +26,30 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/auto_recycler_view"
-        android:layout_width="411dp"
-        android:layout_height="527dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="409dp"
+        android:layout_height="570dp"
+        android:background="#AEBFCE"
         android:paddingBottom="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_box" />
+        app:layout_constraintTop_toBottomOf="@+id/search_box"
+        tools:listitem="@layout/list_item_auto" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/new_auto_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#B7C5DB"
         android:clickable="true"
         android:focusable="true"
         android:src="@android:drawable/ic_input_add"
-        app:backgroundTint="#263799"
+        app:backgroundTint="#F36442"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/auto_recycler_view" />
+        app:layout_constraintTop_toBottomOf="@+id/auto_recycler_view"
+        app:rippleColor="#FF0000" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

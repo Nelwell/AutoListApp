@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -21,13 +20,11 @@ public class AutoAddEditFragment extends Fragment {
 
     private static final String ARG_AUTO_ID = "auto_id";
 
-    private AutoRecord mAuto;
     private EditText mYear;
     private EditText mMake;
     private EditText mModel;
     private EditText mNote;
     private ImageButton mImageFilePath;
-    private TextView mDateEntered;
     private Button mFinishedButton;
     private AutoAddEditViewModel mAutoAddEditViewModel;
 
@@ -57,7 +54,6 @@ public class AutoAddEditFragment extends Fragment {
         mMake = v.findViewById(R.id.make_edittext);
         mModel = v.findViewById(R.id.model_edittext);
         mNote = v.findViewById(R.id.notes_edittext);
-//        mDateEntered = v.findViewById(R.id.date_entered);
         mFinishedButton = v.findViewById(R.id.finished_button);
 
         // Finished button click listener
@@ -69,7 +65,6 @@ public class AutoAddEditFragment extends Fragment {
                 String model = mModel.getText().toString();
                 String note = mNote.getText().toString();
 //                mImageFilePath = v.findViewById(R.id.auto_image_button); //TODO create filepath strings for image
-//                Date dateEntered = java.sql.Date.getDate(mDateEntered);
                 AutoRecord newAuto = new AutoRecord(year, make, model, note, "", new Date());
                 mAutoAddEditViewModel.insert(newAuto);
             }
@@ -82,6 +77,7 @@ public class AutoAddEditFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        // Get view model connection
         mAutoAddEditViewModel = ViewModelProviders.of(this).get(AutoAddEditViewModel.class);
 
         // ....
