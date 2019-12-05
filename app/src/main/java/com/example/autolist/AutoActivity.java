@@ -32,7 +32,7 @@ public class AutoActivity extends SingleFragmentActivity {
             autoId = getIntent().getIntExtra(EXTRA_AUTO_ID, 0);
         }
 
-        // return new instance of AutAddEditFrsgment
+        // return new instance of AutAddEditFragment
         return AutoAddEditFragment.newInstance(autoId);
     }
 }

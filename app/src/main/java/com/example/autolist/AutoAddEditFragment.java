@@ -65,6 +65,7 @@ public class AutoAddEditFragment extends Fragment {
                 String model = mModel.getText().toString();
                 String note = mNote.getText().toString();
 //                mImageFilePath = v.findViewById(R.id.auto_image_button); //TODO create filepath strings for image
+                // Bundles all fields into new AutoRecord
                 AutoRecord newAuto = new AutoRecord(year, make, model, note, "", new Date());
                 mAutoAddEditViewModel.insert(newAuto);
             }

@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -44,7 +43,7 @@ public class AutoListFragment extends Fragment {
         mSearchBox = view.findViewById(R.id.search_box);
         mAddAutoButton = view.findViewById(R.id.new_auto_fab);
 
-        // Gets reference to recycler view's attribute ID in activity_fragment layout file
+        // Gets reference to recycler view's attribute ID in auto_recycler_view layout file
         mAutoRecyclerView = view.findViewById(R.id.auto_recycler_view);
         // Calls layout manager object to linearly display items in list
         mAutoRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -61,7 +60,7 @@ public class AutoListFragment extends Fragment {
             }
         });
 
-        // Delete items from recyclerView by swiping
+        // Delete items from recyclerView by swiping, adapted from Coding In Flow's YouTube channel tutorials
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -138,7 +137,7 @@ public class AutoListFragment extends Fragment {
         public void bind(AutoRecord auto) {
             mAuto = auto;
             mTitle.setText(auto.getTitle());
-            mDateCreatedTextView.setText("Created on "+auto.getDateEntered());
+            mDateCreatedTextView.setText("Created on " + auto.getDateEntered());
             mNotesTextView.setText(auto.getNote());
         }
     }
@@ -154,13 +153,13 @@ public class AutoListFragment extends Fragment {
 //            if (mAutos == null) {
 //                return 0;
 //            } else {
-                return mAutos.size();
+            return mAutos.size();
         }
 
         @NonNull
         @Override
         public AutoItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            // Get a reference to the Auto_list_element LinearLayout container and inflate in, in this context
+            // Get a reference to the Auto_list_element ConstraintLayout container and inflate in, in this context
             ConstraintLayout layout = (ConstraintLayout) LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_item_auto, parent, false);
             // Create and return a new viewHolder, to contain this LinearLayout

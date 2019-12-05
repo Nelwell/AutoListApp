@@ -55,7 +55,7 @@
 
     <Button
         android:id="@+id/finished_button"
-        android:layout_width="376dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#717796"
         android:text="@string/finished_button"
